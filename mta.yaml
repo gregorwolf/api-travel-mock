@@ -1,0 +1,53 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = api-travel-mock
+## language=nodejs; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: api-travel-mock
+version: 1.0.0
+description: "Mock &#x2F;DMO&#x2F;API_TRAVEL_U_V2 service of ABAP Flight Reference Scenario"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+ - name: api-travel-mock-db
+   type: hdb
+   path: gen/db
+   parameters:
+     memory: 256M
+     disk-quota: 256M
+   requires:
+     - name: api-travel-mock-db-service
+ # --------------------- SERVER MODULE ------------------------
+ - name: api-travel-mock-srv
+ # ------------------------------------------------------------
+   type: nodejs
+   path: gen/srv
+   parameters:
+     memory: 256M
+     disk-quota: 1024M
+   provides:
+    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+   requires:
+     - name: api-travel-mock-db-service
+
+resources:
+ - name: api-travel-mock-db-service
+   type: com.sap.xs.hdi-container
+   parameters:
+     service: hanatrial  # 'hana' or 'hanatrial' on trial landscapes
+     service-plan: hdi-shared
+   properties:
+     hdi-container-name: ${service-name}
+
+
+

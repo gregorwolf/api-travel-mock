@@ -1,0 +1,6 @@
+### Reset Data
+GET {{$dotenv SAPCPURL}}/DMO/API_TRAVEL_U_V2/reset
+Content-Type: application/json
+
+{}
+

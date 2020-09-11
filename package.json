@@ -15,7 +15,13 @@
     "sqlite3": "^5"
   },
   "scripts": {
-    "start": "npx cds run"
+    "start": "npx cds run",
+    "start:hana": "DEBUG=y PORT=4000 NODE_ENV=production npx cds run",
+    "start:debug": "DEBUG=y PORT=4000 npx cds run --in-memory",
+    "start:mocked": "npx cds run --in-memory --with-mocks",
+    "build:cf": "mbt build",
+    "deploy:cf-trial": "cf deploy mta_archives/api-travel-mock_1.0.0.mtar",
+    "deploy:cf": "cf deploy mta_archives/api-travel-mock_1.0.0.mtar -e cf.mtaext"
   },
   "cds": {
     "hana": {
@@ -33,7 +39,7 @@
     "[development]": {
       "requires": {
         "db": {
-           "kind": "sqlite"
+          "kind": "sqlite"
         }
       }
     }
