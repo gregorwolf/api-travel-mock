@@ -1,6 +1,14 @@
-### Reset Data
-GET {{$dotenv SAPCPURL}}/DMO/API_TRAVEL_U_V2/reset
+### Reset Data Local
+POST http://localhost:4000/DMO/API_TRAVEL_U_V2/reset
 Content-Type: application/json
 
 {}
 
+### Reset Data
+POST {{$dotenv SAPCPURL}}/DMO/API_TRAVEL_U_V2/reset
+Content-Type: application/json
+
+{}
+
+### Reset Data Local
+GET http://localhost:4000/DMO/API_TRAVEL_U_V2/Travel

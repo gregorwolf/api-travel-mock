@@ -9,7 +9,34 @@
       "name": "cds run",
       "request": "launch",
       "type": "node-terminal",
-      "skipFiles": [ "<node_internals>/**" ]
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Run api-travel-mock-1",
+      "request": "launch",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "-n"
+      ],
+      "args": [
+        "--",
+        "cds",
+        "run",
+        "--in-memory?"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "envFile": "${workspaceFolder}/.env1",
+      "env": {
+        "run.config": "{\"handlerId\":\"cap_run_config_handler_id\",\"runnableId\":\"/home/user/projects/api-travel-mock\"}"
+      }
     }
   ]
 }
