@@ -1,0 +1,587 @@
+{
+  "definitions": {
+    "API_TRAVEL_U_V2": {
+      "kind": "service"
+    },
+    "API_TRAVEL_U_V2.TravelAgency": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "AgencyID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 6
+        },
+        "Name": {
+          "type": "cds.String",
+          "length": 80
+        },
+        "Street": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "PostalCode": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "City": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "CountryCode": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "PhoneNumber": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "EMailAddress": {
+          "type": "cds.String",
+          "length": 256
+        },
+        "WebAddress": {
+          "type": "cds.String",
+          "length": 256
+        },
+        "to_Country": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Country"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.xDMOxI_Airport": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "AirportID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "Name": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "City": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "CountryCode": {
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.BookingSupplement": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "TravelID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 8
+        },
+        "BookingID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "BookingSupplementID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "SupplementID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "Price": {
+          "type": "cds.Decimal",
+          "precision": 17,
+          "scale": 3
+        },
+        "CurrencyCode": {
+          "type": "cds.String",
+          "length": 5
+        },
+        "to_Booking": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Booking"
+        },
+        "to_Product": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Supplement"
+        },
+        "to_SupplementText": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.SupplementText",
+          "cardinality": {
+            "max": "*"
+          }
+        },
+        "to_Travel": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Travel"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Booking": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "TravelID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 8
+        },
+        "BookingID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "BookingDate": {
+          "type": "cds.Date"
+        },
+        "CustomerID": {
+          "type": "cds.String",
+          "length": 6
+        },
+        "AirlineID": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "ConnectionID": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "FlightDate": {
+          "type": "cds.Date"
+        },
+        "FlightPrice": {
+          "type": "cds.Decimal",
+          "precision": 17,
+          "scale": 3
+        },
+        "CurrencyCode": {
+          "type": "cds.String",
+          "length": 5
+        },
+        "to_BookSupplement": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.BookingSupplement",
+          "cardinality": {
+            "max": "*"
+          },
+          "on": [
+            {
+              "ref": [
+                "to_BookSupplement",
+                "BookingID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "BookingID"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "to_BookSupplement",
+                "TravelID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "TravelID"
+              ]
+            }
+          ]
+        },
+        "to_Carrier": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Airline"
+        },
+        "to_Connection": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.FlightConnection"
+        },
+        "to_Customer": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Passenger"
+        },
+        "to_Travel": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Travel"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Airline": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "AirlineID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "Name": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "CurrencyCode": {
+          "type": "cds.String",
+          "length": 5
+        },
+        "to_Currency": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Currency"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.FlightConnection": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "AirlineID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "ConnectionID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "AirlineID_Text": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "DepartureAirport": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "DestinationAirport": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "DepartureTime": {
+          "type": "cds.Time"
+        },
+        "ArrivalTime": {
+          "type": "cds.Time"
+        },
+        "Distance": {
+          "type": "cds.Integer"
+        },
+        "DistanceUnit": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "to_Airline": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Airline"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Passenger": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "CustomerID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 6
+        },
+        "FirstName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "LastName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "Title": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "Street": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "PostalCode": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "City": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "CountryCode": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "PhoneNumber": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "EMailAddress": {
+          "type": "cds.String",
+          "length": 256
+        },
+        "to_Country": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Country"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Flight": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "AirlineID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "ConnectionID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "FlightDate": {
+          "key": true,
+          "type": "cds.Date"
+        },
+        "AirlineID_Text": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "Price": {
+          "type": "cds.Decimal",
+          "precision": 17,
+          "scale": 3
+        },
+        "CurrencyCode": {
+          "type": "cds.String",
+          "length": 5
+        },
+        "PlaneType": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "MaximumSeats": {
+          "type": "cds.Integer"
+        },
+        "OccupiedSeats": {
+          "type": "cds.Integer"
+        },
+        "to_Airline": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Airline"
+        },
+        "to_Connection": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.FlightConnection"
+        },
+        "to_Currency": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Currency"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Supplement": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "SupplementID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "SupplementID_Text": {
+          "type": "cds.String",
+          "length": 1024
+        },
+        "Price": {
+          "type": "cds.Decimal",
+          "precision": 17,
+          "scale": 3
+        },
+        "CurrencyCode": {
+          "type": "cds.String",
+          "length": 5
+        },
+        "to_Currency": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Currency"
+        },
+        "to_SupplText": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.SupplementText",
+          "cardinality": {
+            "max": "*"
+          }
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.SupplementText": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "SupplementID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "LanguageCode": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "Description": {
+          "type": "cds.String",
+          "length": 1024
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Travel": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "TravelID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 8
+        },
+        "AgencyID": {
+          "type": "cds.String",
+          "length": 6
+        },
+        "CustomerID": {
+          "type": "cds.String",
+          "length": 6
+        },
+        "BeginDate": {
+          "type": "cds.Date"
+        },
+        "EndDate": {
+          "type": "cds.Date"
+        },
+        "BookingFee": {
+          "type": "cds.Decimal",
+          "precision": 17,
+          "scale": 3
+        },
+        "TotalPrice": {
+          "type": "cds.Decimal",
+          "precision": 17,
+          "scale": 3
+        },
+        "CurrencyCode": {
+          "type": "cds.String",
+          "length": 5
+        },
+        "Memo": {
+          "type": "cds.String",
+          "length": 1024
+        },
+        "Status": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "LastChangedAt": {
+          "type": "cds.Timestamp"
+        },
+        "to_Agency": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.TravelAgency"
+        },
+        "to_Booking": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Booking",
+          "cardinality": {
+            "max": "*"
+          },
+          "on": [
+            {
+              "ref": [
+                "to_Booking",
+                "TravelID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "TravelID"
+              ]
+            }
+          ]
+        },
+        "to_Currency": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Currency"
+        },
+        "to_Customer": {
+          "type": "cds.Association",
+          "target": "API_TRAVEL_U_V2.Passenger"
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Country": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "Country": {
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "Country_Text": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "CountryThreeLetterISOCode": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "CountryThreeDigitISOCode": {
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "API_TRAVEL_U_V2.Currency": {
+      "kind": "entity",
+      "@cds.persistence.skip": true,
+      "elements": {
+        "Currency": {
+          "key": true,
+          "type": "cds.String",
+          "length": 5
+        },
+        "Currency_Text": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "Decimals": {
+          "type": "cds.Integer"
+        },
+        "CurrencyISOCode": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "AlternativeCurrencyKey": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "IsPrimaryCurrencyForISOCrcy": {
+          "type": "cds.Boolean"
+        }
+      }
+    }
+  }
+}

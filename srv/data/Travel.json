@@ -1,0 +1,41 @@
+[
+  {
+    "TravelID": "1",
+    "AgencyID": "70041",
+    "CustomerID": "594",
+    "BeginDate": "2020-01-02",
+    "EndDate": "2020-01-03",
+    "BookingFee": "40.00",
+    "TotalPrice": "1883.18",
+    "CurrencyCode": "USD",
+    "Memo": "Vacations",
+    "Status": "P",
+    "LastChangedAt": "2020-01-03"
+  },
+  {
+    "TravelID": "2",
+    "AgencyID": "70007",
+    "CustomerID": "608",
+    "BeginDate": "2020-01-02",
+    "EndDate": "2020-01-02",
+    "BookingFee": "20.00",
+    "TotalPrice": "900.00",
+    "CurrencyCode": "USD",
+    "Memo": "Business Trip for Christine, Pierre",
+    "Status": "N",
+    "LastChangedAt": "2020-01-03"
+  },
+  {
+    "TravelID": "3",
+    "AgencyID": "70046",
+    "CustomerID": "93",
+    "BeginDate": "2020-01-02",
+    "EndDate": "2020-01-03",
+    "BookingFee": "80.00",
+    "TotalPrice": "4164.00",
+    "CurrencyCode": "USD",
+    "Memo": "Vacation",
+    "Status": "P",
+    "LastChangedAt": "2020-01-03"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "name": "api-travel-mock",
+  "version": "1.0.0",
+  "description": "Mock /DMO/API_TRAVEL_U_V2 service of ABAP Flight Reference Scenario",
+  "repository": "https://github.com/gregorwolf/api-travel-mock",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^4",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.44",
+    "express": "^4",
+    "@sap/hana-client": "^2.5.109"
+  },
+  "devDependencies": {
+    "sqlite3": "^5"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "API_TRAVEL_U_V2": {
+        "kind": "odata",
+        "model": "srv/external/API_TRAVEL_U_V2"
+      },
+      "db": {
+        "kind": "hana"
+      }
+    },
+    "[development]": {
+      "requires": {
+        "db": {
+           "kind": "sqlite"
+        }
+      }
+    }
+  }
+}
